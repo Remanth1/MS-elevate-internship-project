@@ -1,0 +1,6 @@
+print('--- DataFrame Info ---\n')
+df.info()
+print('\n--- Missing Values ---\n')
+print(df.isnull().sum())
+print('\n--- Descriptive Statistics for Cost ---\n')
+print(df['Cost'].describe())
