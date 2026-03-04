@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Cost Insights Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Import Google Fonts for a premium look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar or Header -->
+        <header class="header blur-glass">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#4dabf7" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M2 17L12 22L22 17" stroke="#4dabf7" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M2 12L12 17L22 12" stroke="#4dabf7" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                <h1>Cloud Spend Analytics</h1>
+            </div>
+            <div class="user-profile">Admin</div>
+        </header>
+
+        <!-- Dynamic Summary / Alerts Feed -->
+        <section class="ai-alerts blur-glass">
+            <div class="ai-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#a78bfa" stroke="#a78bfa" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <h2>AI Smart Alerts</h2>
+            </div>
+            <div id="alerts-feed" class="alerts-feed">
+                <p>Analyzing cloud telemetry...</p>
+            </div>
+        </section>
+
+        <!-- Key Performance Indicators (KPIs) -->
+        <div class="kpi-grid">
+            <div class="kpi-card blur-glass">
+                <h3>Total Cloud Spend</h3>
+                <h2 id="kpi-total-cost">$0.00</h2>
+                <span class="trend positive" id="kpi-mom-trend">+0.0% MoM</span>
+            </div>
+            <div class="kpi-card blur-glass forecast-card">
+                <h3>90-Day Forecasted Spend</h3>
+                <h2 id="kpi-forecast">$0.00</h2>
+                <span class="subtitle" id="kpi-forecast-pct">Based on linear regression</span>
+            </div>
+            <div class="kpi-card blur-glass">
+                <h3>Highest Cost Service</h3>
+                <h2 id="kpi-top-service">Loading...</h2>
+                <span class="subtitle" id="kpi-top-service-pct">0% of total</span>
+            </div>
+            <div class="kpi-card blur-glass">
+                <h3>Highest Cost Environment</h3>
+                <h2 id="kpi-top-env">Loading...</h2>
+                <span class="subtitle" id="kpi-top-env-pct">0% of total</span>
+            </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="charts-grid">
+            <!-- Main Trend Line Chart -->
+            <div class="chart-container large blur-glass">
+                <h3>Monthly Cost Trend</h3>
+                <canvas id="monthlyTrendChart"></canvas>
+            </div>
+
+            <!-- Service Breakdown Bar Chart -->
+            <div class="chart-container blur-glass">
+                <h3>Spend by Service</h3>
+                <canvas id="serviceChart"></canvas>
+            </div>
+
+            <!-- Environment Breakdown Doughnut Chart -->
+            <div class="chart-container blur-glass">
+                <h3>Spend by Environment</h3>
+                <canvas id="environmentChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Logic -->
+    <script src="script.js"></script>
+</body>
+
+</html>

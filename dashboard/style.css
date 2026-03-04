@@ -1,0 +1,247 @@
+/* --- Design Base --- */
+:root {
+    --bg-color: #0b1120;
+    /* Deep blue/black premium dark mode */
+    --surface-color: rgba(30, 41, 59, 0.7);
+    /* Slightly transparent slate for glass effect */
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --accent-color: #3b82f6;
+    /* Modern blue */
+    --accent-glow: rgba(59, 130, 246, 0.3);
+    --positive-trend: #10b981;
+    /* Emerald green */
+    --negative-trend: #ef4444;
+    /* Red */
+    --border-color: rgba(255, 255, 255, 0.05);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    min-height: 100vh;
+    /* Subtle background glow effect */
+    background-image: radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.15), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.15), transparent 25%);
+    background-attachment: fixed;
+}
+
+/* Glassmorphism Utility */
+.blur-glass {
+    background: var(--surface-color);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-container {
+    padding: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* --- Header Section --- */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    background: linear-gradient(to right, #60a5fa, #a78bfa);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* --- AI Smart Alerts --- */
+.ai-alerts {
+    padding: 20px 24px;
+    border-left: 4px solid #a78bfa;
+    /* Purple for AI */
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ai-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ai-header h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #e2e8f0;
+}
+
+.alerts-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 150px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* Custom Scrollbar for feed */
+.alerts-feed::-webkit-scrollbar {
+    width: 6px;
+}
+
+.alerts-feed::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+.alerts-feed::-webkit-scrollbar-thumb {
+    background: rgba(167, 139, 250, 0.5);
+    /* Purple thumb */
+    border-radius: 10px;
+}
+
+.alert-item {
+    font-weight: 300;
+    line-height: 1.5;
+    font-size: 0.95rem;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.alert-item.anomaly {
+    border-left: 3px solid var(--negative-trend);
+}
+
+.alert-item.insight {
+    border-left: 3px solid var(--accent-color);
+}
+
+.alert-item strong {
+    font-weight: 600;
+    color: #fff;
+}
+
+/* --- KPIs Grid --- */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.kpi-card {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kpi-card.forecast-card {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(88, 28, 135, 0.15) 100%);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+}
+
+.kpi-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 40px var(--accent-glow);
+}
+
+.kpi-card h3 {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.kpi-card h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 4px 0;
+}
+
+.kpi-card .trend.positive {
+    color: var(--positive-trend);
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.kpi-card .trend.negative {
+    color: var(--negative-trend);
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.kpi-card .subtitle {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* --- Charts Grid --- */
+.charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.chart-container {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    /* Fixed height for consistent layout */
+}
+
+.chart-container h3 {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Make canvas wrapper flexible to fill space */
+.chart-container canvas {
+    flex-grow: 1;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Span the line chart across the full width */
+.chart-container.large {
+    grid-column: 1 / -1;
+    height: 450px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+}

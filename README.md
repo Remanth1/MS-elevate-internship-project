@@ -1,122 +1,57 @@
-# MS-elevate-internship-project
+# Cloud Cost Analytics & AI Dashboard
 
-Cloud Cost Optimization Dashboard built with Power BI to analyze cloud usage and billing data. This project provides interactive visualizations and reports to help teams monitor, understand, and optimize cloud spending across services, regions, and environments.
+This repository contains robust analytical tools for processing and visualizing cloud infrastructure costs, originally designed for Power BI but now extended into a standalone, AI-powered web dashboard.
 
-## Table of contents
-- [Project overview](#project-overview)
-- [Features](#features)
-- [Data sources](#data-sources)
-- [Architecture & workflow](#architecture--workflow)
-- [Getting started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Load the data and open the report](#load-the-data-and-open-the-report)
-- [Using the dashboard](#using-the-dashboard)
-- [Common use cases](#common-use-cases)
-- [Contributing](#contributing)
-- [Roadmap & next steps](#roadmap--next-steps)
-- [License](#license)
-- [Contact](#contact)
+## Overview
 
-## Project overview
-This repository hosts resources and documentation for a Power BI-based Cloud Cost Optimization Dashboard. The dashboard is designed to make cloud billing and usage data actionable by presenting:
-- Service-wise cost breakdowns
-- Region-wise cost and usage trends
-- Environment (e.g., prod, staging, dev) comparisons
-- Time-series trends and anomaly detection support
-- Recommendations and filters for cost attribution and chargeback
+The project is split into two primary components:
 
-The dashboard helps engineers, finance, and product owners quickly identify cost hotspots and track the effect of optimization measures.
+1. **Power BI Python Scripts**: Core python logic intended to be executed natively within Microsoft Power BI visuals to calculate percent breakdowns, Month-over-Month (MoM) growth, and generate automated textual insights.
+2. **AI Web Dashboard**: A bespoke, premium HTML/CSS/JS frontend powered by a lightweight Python API server that replicates and enhances the Power BI experience outside of the Microsoft ecosystem.
 
-## Features
-- Interactive visuals for drill-down analysis (by service, resource type, region, environment)
-- Time-series charts for trend analysis and forecasting
-- Top-N spenders and growth indicators
-- Environment and tag-based filtering for chargeback and allocation
-- Exportable reports and snapshots for finance reviews
+---
 
-## Data sources
-This dashboard is intended to work with standard cloud provider billing exports. Typical inputs:
-- Cloud billing CSV or JSON exports (AWS Cost & Usage Report, Azure Cost Management export, GCP billing export)
-- Resource metadata (tags, environment, owner) exported from cloud APIs or internal CMDB
-- Optional: Cost allocation or mapping files (to map sku/product codes to friendly names, departments, or cost centers)
+## 1. Power BI Scripts
 
-Ensure your exported/collated billing data includes at least:
-- Usage start/end or billing date
-- Product/service name
-- Region
-- Resource or SKU identifier
-- Cost (and currency if applicable)
-- Any tags or labels for environment/owner/team
+These scripts (`TrendAnalysis.py`, `DataExploration.py`, `KeyVisuals*.py`) are designed to take a Pandas DataFrame (`df`) containing cloud billing telemetry (`Date`, `Service`, `Instance_Type`, `Environment`, `Cost`) and transform it.
 
-## Architecture & workflow
-A typical workflow to produce the dashboard:
-1. Export raw billing data from your cloud provider (daily or hourly exports recommended).
-2. Preprocess the export (normalize columns, unify currency, map SKUs to friendly names, apply tags/ownership).
-3. Save the cleaned dataset to a CSV/Parquet or load into a data warehouse (Azure Storage, S3, BigQuery, etc.).
-4. Open the Power BI report (.pbix) and connect it to the prepared dataset or publish to Power BI Service for scheduled refresh.
-5. Use dashboard filters and pages to explore and generate insights.
+### Features:
+- Calculates **MoM Growth %** for tracking cost velocity.
+- Sorts and ranks spending across Services and Environments.
+- Generates **dynamic textual insights** directly into the visual output, summarizing the top spenders and percentage breakdowns.
 
-## Getting started
+---
 
-### Prerequisites
-- Power BI Desktop (latest stable release) — to open and edit the report locally.
-- (Optional) Power BI Pro or Premium — if you want to publish to Power BI Service and share dashboards.
-- Python / scripts — if you plan to run any provided preprocessing scripts (check the repo for `scripts/`).
-- Billing export files from your cloud provider.
+## 2. The Custom AI Dashboard (`/dashboard`)
 
-### Load the data and open the report
-1. Locate or prepare your billing export(s): export CSV, JSON or load from your cloud storage.
-2. If this repo includes a `.pbix` report file, open it in Power BI Desktop:
-   - File > Open > select the `.pbix` file.
-3. Update the data source settings in Power BI to point to your prepared dataset (CSV, database, or cloud storage).
-4. If the repo contains preprocessing scripts (e.g., `scripts/prepare_billing.py`), run those to normalize the data before connecting:
-   - Install dependencies: `pip install -r requirements.txt`
-   - Run the script: `python scripts/prepare_billing.py --input raw/billing.csv --output cleaned/billing_cleaned.csv`
-5. Refresh the report in Power BI to populate visuals with your data.
+To provide an executive-level wow-factor free from licensing restrictions, a custom web dashboard was built from scratch. It utilizes a **Glassmorphism dark-mode aesthetic** and incorporates advanced mathematical modeling directly in the browser to act as an "AI Analyst".
 
-Note: If the repository does not include a `.pbix` file, follow the included report instructions or create a new Power BI report and import the prepared dataset using the structure described above.
+### Advanced AI Features:
+- **Z-Score Anomaly Detection**: A statistical engine calculates the mean and standard deviation of daily cloud costs. Any individual charge that spikes above a safe threshold (Z-Score > 2.0) is automatically flagged in the UI as a potential issue.
+- **Predictive Forecasting (Linear Regression)**: The dashboard mathematically analyzes historical monthly spend to find the line-of-best-fit. It then draws a dotted projection line 90-days into the future and explicitly calculates if costs are expected to rise or fall.
+- **Smart Alerts Feed**: A dynamic sidebar feed that interprets the raw data and models, printing out plain-English alerts (e.g., *"Forecast Insight: AI predicts spending will increase by 12% over the next quarter"*).
 
-## Using the dashboard
-- Use the date slicer to focus on a billing period.
-- Drill down on service or region charts to see resource-level spend.
-- Filter by environment tag to compare production vs non-production costs.
-- Export visuals as images or export data tables for ad-hoc analysis.
-- Use the Top-N filters to find the highest spending services or resources.
+### Tech Stack:
+- **Backend API**: Python 3 standard library `http.server` (No frameworks required).
+- **Frontend**: Vanilla HTML5, CSS3 (Flexbox/Grid), and Vanilla JavaScript (ES6+).
+- **Data Visualization**: Chart.js.
 
-## Common use cases
-- Monthly cost reviews with finance
-- Identifying underutilized or orphaned resources
-- Chargeback/showback by environment or team
-- Tracking the cost impact of infrastructure changes
-- Spotting sudden cost spikes (alerts or anomaly detection via trend comparisons)
+### How to Run Successfully Locally:
+You do not need to install Node/NPM or any complicated servers.
 
-## Contributing
-Contributions are welcome. Typical contributions include:
-- Adding sample datasets or sanitized exports for demos
-- Improving preprocessing scripts (data normalization, currency conversion)
-- Enhancing Power BI report visuals and documentation
-- Adding automated tests or CI for data pipelines
+1. Open your terminal.
+2. Navigate into the `dashboard` directory: 
+   ```bash
+   cd dashboard
+   ```
+3. Start the local Python server:
+   ```bash
+   python app.py
+   ```
+4. Open your web browser and navigate to:
+   **[http://localhost:8000](http://localhost:8000)**
 
-To contribute:
-1. Fork the repository.
-2. Create a branch: `git checkout -b feat/add-sample-data`
-3. Make your changes, commit, and push.
-4. Open a pull request describing your changes.
+---
 
-If you would like me to commit the README directly or open a PR with this README update, tell me which branch to use and I will push the change.
-
-## Roadmap & next steps
-Planned improvements:
-- Add sample anonymized billing data for demo purposes
-- Provide an automated ingestion pipeline (Azure Functions / Lambda) to preprocess billing exports
-- Add cost anomaly detection and automated alerts
-- Provide prebuilt templates for Power BI Service deployment (datasets + report + dashboards)
-
-## License
-Specify a license for your project (e.g., MIT, Apache-2.0). If you don't have a license yet, consider adding one (see [choosealicense.com](https://choosealicense.com/)).
-
-## Contact
-Maintainer: Remanth1  
-Project: MS-elevate-internship-project
-
-If you'd like me to commit this README.md into the repository, tell me the target branch (default `main`) and I'll push the change.
+## Authors & Maintainers
+*Remanth* - MS Elevate Internship Project
